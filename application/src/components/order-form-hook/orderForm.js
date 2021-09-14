@@ -6,7 +6,7 @@ import './orderForm.css';
 
 const ADD_ORDER_URL = `${SERVER_IP}/api/add-order`
 
-export default OrderForm = () => {
+const OrderForm = () => {
     const [orderItem, setOrderItem] = useState("");
     const [quantity, setQuantity] = useState("1");
 
@@ -62,3 +62,5 @@ export default OrderForm = () => {
         </Template>
     );
 }
+
+export default OrderForm;

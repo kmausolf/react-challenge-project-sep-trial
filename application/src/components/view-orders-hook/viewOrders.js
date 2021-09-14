@@ -4,7 +4,7 @@ import { SERVER_IP } from '../../private';
 import OrdersList from './ordersList';
 import './viewOrders.css';
 
-export default function ViewOrders(props) {
+const ViewOrders = (props) => {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -29,3 +29,5 @@ export default function ViewOrders(props) {
         </Template>
     );
 }
+
+export default ViewOrders;
