@@ -1,44 +1,49 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { SERVER_IP } from '../../private'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { SERVER_IP } from "../../private";
+
+const INITIAL_STATE = { email: "", token: "" };
+
+export const login = createAsyncThunk(
+  "auth/loginStatus",
+  async (email, password, thunkAPI) => {
+    try {
+      fetch(`${SERVER_IP}/api/login`, {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.success) {
+            return { email: response.email, token: response.token };
+          } 
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+)
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    email: null,
-    token: null,
-  },
+  initialState: INITIAL_STATE,
   reducers: {
-    login: {
-      reducer: (state, action) => {
-        if(action.payload) {
-            state.email = action.payload.email;
-            state.token = action.payload.token;
-        }
-      },
-      prepare: (email, password) => {
-        fetch(`${SERVER_IP}/api/login`, {
-          method: "POST",
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((response) => {
-            if (response.success) {
-                return { payload: { email: response.email, token: response.token }};
-            }
-          });
-      },
-    },
     logout: (state, action) => {
       state = this.initialState;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.email = action.email;
+      state.token = action.token;
+    })
+  }
 });
 
-export const { login, logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;
