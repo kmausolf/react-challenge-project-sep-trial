@@ -1,7 +1,8 @@
-import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
-import reducers from './reducers';
+import { configureStore } from "@reduxjs/toolkit";
+import { authSlice } from "../components/login/authSlice";
 
-const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-
-export default store;
+export const store = configureStore({
+    reducer: {
+        auth: authSlice,
+    },
+});
