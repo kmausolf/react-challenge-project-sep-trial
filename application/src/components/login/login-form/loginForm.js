@@ -25,7 +25,7 @@ const LoginForm = (props) => {
         <input type="password" className="form-control" id="inputPassword" value={password} onChange={e => setPassword(e.target.value)}></input>
       </div>
       <div className="d-flex justify-content-center">
-          <button onClick={e => handleLoginSubmit(e)} type="submit" className="btn btn-primary">Login</button>
+          <button onClick={handleLoginSubmit} type="submit" className="btn btn-primary">Login</button>
       </div>
     </form>
   );
