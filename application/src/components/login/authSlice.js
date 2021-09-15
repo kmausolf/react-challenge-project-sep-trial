@@ -38,8 +38,8 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
-      state.email = action.email;
-      state.token = action.token;
+      state.email = action.payload.email;
+      state.token = action.payload.token;
     });
   },
 });
