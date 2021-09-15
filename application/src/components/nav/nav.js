@@ -10,7 +10,7 @@ const Nav = (props) => {
 
     const onLogout = () => {
         dispatch(logout());
-        history.push("/");
+        history.push("/login");
     }
 
     return (
@@ -25,11 +25,11 @@ const Nav = (props) => {
                     <label className="nav-label">View Orders</label>
                 </div>
             </Link>
-            <Link to={"/login"} className="nav-link">
-                <div className="nav-link-style" onClick={onLogout}>
+            <div className="nav-link" onClick={onLogout}>
+                <div className="nav-link-style">
                     <label className="nav-label">Log Out</label>
                 </div>
-            </Link>
+            </div>
         </div>
     );
 }
