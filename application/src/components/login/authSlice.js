@@ -5,7 +5,7 @@ const INITIAL_STATE = { email: "", token: "" };
 
 const performLogin = async (email, password, thunkAPI) => {
   try {
-    fetch(`${SERVER_IP}/api/login`, {
+    const loginResponse = await fetch(`${SERVER_IP}/api/login`, {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -14,15 +14,18 @@ const performLogin = async (email, password, thunkAPI) => {
       headers: {
         "Content-Type": "application/json",
       },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.success) {
-          return { email: response.email, token: response.token };
-        }
-      });
+    }).then((response) => response.json());
+
+    if(loginResponse.success) {
+      return { email: loginResponse.email, token: loginResponse.token };
+    }
+    else {
+      return INITIAL_STATE;
+    }
+
   } catch (error) {
     console.error(error);
+    return INITIAL_STATE;
   }
 };
 
@@ -38,8 +41,8 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
-      state.email = action.email;
-      state.token = action.token;
+      state.email = action.payload.email;
+      state.token = action.payload.token;
     });
   },
 });
