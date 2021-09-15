@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { login } from '../authSlice';
 
 const LoginForm = (props) => {
@@ -7,11 +8,18 @@ const LoginForm = (props) => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+  const history = useHistory();
+  const user = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if(user?.token.length) {
+      history.push("/view-orders")
+    }
+  }, [user, history])
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
-    props.onLogin();
   }
 
   return (
