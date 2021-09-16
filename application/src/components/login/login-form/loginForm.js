@@ -9,7 +9,6 @@ const LoginForm = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector((state) => state.auth);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();

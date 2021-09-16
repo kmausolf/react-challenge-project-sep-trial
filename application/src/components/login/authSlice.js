@@ -36,9 +36,7 @@ export const authSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     logout: (state, action) => {
-      // state = INITIAL_STATE doesn't work for whatever reason
-      state.email = "";
-      state.token = "";
+      state = { ...INITIAL_STATE }
     },
   },
   extraReducers: (builder) => {
